@@ -32,39 +32,6 @@
 
     </div>
 
-    <div>
-      <h2>여기는 React랑 관련없는 영역입니다.</h2>
-      <div id="test" onclick="clickHandler()">여기를 클릭하세요!</div>
-    </div>
 
-    <script>
-
-      document.getElementById('test').addEventListener('mouseenter', clickHandler)
-      function clickHandler(e) {
-        console.log(e, arguments)
-        console.log(this)
-      }
-
-      var x = 1;
-
-      class X {
-        state = {
-          x:1,
-          y:2
-        }
-
-        render() {
-          console.log(this)
-
-          this.state.x = 2
-        }
-      }
-
-      var x = new X();
-      x.render();
-
-
-
-    </script>
   </body>
 </html>
