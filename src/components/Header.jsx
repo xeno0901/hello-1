@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import logo from '../logo.svg';
-//import './Header.less';
+import './Header.less';
 
 class Header extends Component {
   state = {
