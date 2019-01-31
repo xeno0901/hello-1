@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from '../logo.svg';
+import logo from '../lecture/logo.svg';
 import './Header.less';
 
 class Header extends Component {
