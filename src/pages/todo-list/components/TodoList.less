@@ -6,9 +6,10 @@
 
   .TodoListItem {
     cursor: pointer;
-
     padding: 10px;
     border-bottom: 1px dashed #ccc;
+    display: flex;
+
 
     &:last-child {
       border-bottom: none;
@@ -18,12 +19,23 @@
       background-color: aquamarine;
     }
 
-    .btn {
-      cursor: pointer;
+    .col-ck-box {
+      width: 30px;
     }
 
-    .btn-edit {
-      display: none;
+    .col-content {
+      width: 100%;
+    }
+
+    .col-cmd-box {
+      width: 20px;
+      .btn {
+        cursor: pointer;
+      }
+
+      .btn-edit {
+        display: none;
+      }
     }
   }
 

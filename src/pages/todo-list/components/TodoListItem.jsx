@@ -31,21 +31,26 @@ class TodoListItem extends React.Component {
 
     return (
       <div className="TodoListItem" onClick={this.handleEdit}>
-        <Checkbox checked={completed} onChange={this.props.onChangeSelect} />
-        {isEditable ? (
-          <Input defaultValue={name} onPressEnter={this.handleSave} />
-        ) : (
-          <span>{name}</span>
-        )}
-
-        {!isEditable && <Icon type={'edit'} className={'btn btn-edit'} />}
-        {!isEditable && (
-          <Icon
-            type={'delete'}
-            className={'btn btn-delete'}
-            onClick={this.handleDelete}
-          />
-        )}
+        <div className="col-ck-box">
+          <Checkbox checked={completed} onChange={this.props.onChangeSelect} />
+        </div>
+        <div className="col-content">
+          {isEditable ? (
+            <Input defaultValue={name} onPressEnter={this.handleSave} />
+          ) : (
+            <span>{name}</span>
+          )}
+        </div>
+        <div className="col-cmd-box">
+          {!isEditable && <Icon type={'edit'} className={'btn btn-edit'} />}
+          {!isEditable && (
+            <Icon
+              type={'delete'}
+              className={'btn btn-delete'}
+              onClick={this.handleDelete}
+            />
+          )}
+        </div>
       </div>
     );
   }
