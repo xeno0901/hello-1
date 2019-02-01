@@ -15,8 +15,17 @@ class TodoList extends React.Component {
     onUnselectAll: PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.input = React.createRef();
+  }
+
   handleEnterTodoText = e => {
     this.props.onCreate(e.target.value);
+    this.input.current.setState({
+      value: '',
+    });
   };
 
   handleChangeComplteItem = (item, index, value) => {
@@ -32,6 +41,7 @@ class TodoList extends React.Component {
       <div className="TodoList">
         <div>
           <Input
+            ref={this.input}
             onPressEnter={this.handleEnterTodoText}
             addonAfter={<Icon type="plus" />}
           />
