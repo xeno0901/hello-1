@@ -1,11 +1,11 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import 'components/AppRouter.less';
-import Navigation from 'shared/components/Navigation';
-import IndexPage from 'pages/IndexPage';
-import AboutPage from 'pages/login/LoginPage';
-import TodoListPage from 'pages/todo-list/TodoListPage';
-import {AuthContext} from 'contexts';
+import Navigation from './components/Navigation';
+import IndexPage from './pages/IndexPage';
+import AboutPage from './pages/login/LoginPage';
+import TodoListPage from './pages/todo-list/TodoListPage';
+import {AuthContext} from './contexts';
+import './AppRouter.less';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <AuthContext.Consumer>

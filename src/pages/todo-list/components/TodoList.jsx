@@ -2,8 +2,19 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 import './TodoList.less';
 import {Input, Button, Icon} from 'antd';
+import PropTypes from 'prop-types';
 
 class TodoList extends React.Component {
+  static propTypes = {
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        completed: PropTypes.bool,
+      })
+    ).isRequired,
+    onUnselectAll: PropTypes.func,
+  };
+
   handleEnterTodoText = e => {
     this.props.onCreate(e.target.value);
   };
@@ -15,6 +26,7 @@ class TodoList extends React.Component {
 
   render() {
     const {items} = this.props;
+    const isSelectedAll = items.every(({completed}) => completed);
 
     return (
       <div className="TodoList">
@@ -41,7 +53,11 @@ class TodoList extends React.Component {
         </div>
 
         <div className={'footer'}>
-          <Button>전체선택</Button>
+          {isSelectedAll ? (
+            <Button onClick={this.props.onUnselectAll}>선택해제</Button>
+          ) : (
+            <Button onClick={this.props.onSelectAll}>전체선택</Button>
+          )}
 
           <div>
             <span>할일 {items.filter(item => !item.completed).length}</span>

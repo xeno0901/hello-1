@@ -1,24 +1,36 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Menu} from 'antd';
+import styled from 'styled-components';
+import {AuthContext} from '../contexts';
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #efefef;
+  background-color: #fefefe;
+`;
+
+const LogoutMenu = styled.div`
+  padding-right: 20px;
+`;
 
 const Navigation = ({auth}) => {
-  console.log('Navigation', auth);
-
   return (
-    <nav>
-      <Menu mode="horizontal">
-        <Menu.Item>
-          <Link to="/">Home</Link>
-        </Menu.Item>
+    <Nav>
+      <Link to="/">Home</Link>
 
-        {auth.isAuthenticated && (
-          <Menu.Item>
-            <Link to="/todo-list/">TodoList</Link>
-          </Menu.Item>
-        )}
-      </Menu>
-    </nav>
+      <AuthContext.Consumer>
+        {auth =>
+          auth.isAuthenticated && (
+            <LogoutMenu onClick={() => auth.signout()}>
+              <Link to={'/'}>로그아웃</Link>
+            </LogoutMenu>
+          )
+        }
+      </AuthContext.Consumer>
+    </Nav>
   );
 };
 

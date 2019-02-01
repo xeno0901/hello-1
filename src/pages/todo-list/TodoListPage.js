@@ -1,6 +1,6 @@
 import React from 'react';
-import TodoList from './components/TodoList';
 import styled from 'styled-components';
+import TodoList from './components/TodoList';
 
 const Page = styled.div`
   display: flex;
@@ -22,6 +22,28 @@ class TodoListPage extends React.Component {
   componentWillUnmount() {
     localStorage.setItem('todos', JSON.stringify(this.state.items));
   }
+
+  handleSelectAll = () => {
+    const {items} = this.state;
+
+    this.setState({
+      items: items.map(item => {
+        item.completed = true;
+        return item;
+      }),
+    });
+  };
+
+  handleUnselectAll = () => {
+    const {items} = this.state;
+
+    this.setState({
+      items: items.map(item => {
+        item.completed = false;
+        return item;
+      }),
+    });
+  };
 
   handleChangeComplete = (idx, item) => {
     const {items} = this.state;
@@ -60,6 +82,8 @@ class TodoListPage extends React.Component {
           items={this.state.items}
           onCreate={this.handleAddItem}
           onDelete={this.handleDeleteItem}
+          onSelectAll={this.handleSelectAll}
+          onUnselectAll={this.handleUnselectAll}
           onChangeComplete={this.handleChangeComplete}
         />
       </Page>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ControlledForm from '../components/ControlledForm';
-import UncontrolledForm from '../components/UncontrolledForm';
+import ControlledForm from './components/ControlledForm';
+import UncontrolledForm from './components/UncontrolledForm';
 
 class App extends Component {
   render() {
