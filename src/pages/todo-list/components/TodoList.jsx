@@ -44,6 +44,7 @@ class TodoList extends React.Component {
                 key={`item-${index}`}
                 {...item}
                 onDelete={e => this.props.onDelete(index)}
+                onEdit={value => this.props.onEdit(index, value)}
                 onChangeSelect={e =>
                   this.handleChangeComplteItem(item, index, e.target.checked)
                 }

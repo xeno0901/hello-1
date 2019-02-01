@@ -54,6 +54,17 @@ class TodoListPage extends React.Component {
     });
   };
 
+  handleEditItem = (index, value) => {
+    const {items} = this.state;
+    items[index].name = value;
+
+    localStorage.setItem('todos', JSON.stringify(items));
+
+    this.setState({
+      items: [...items],
+    });
+  };
+
   handleDeleteItem = index => {
     const {items} = this.state;
     items.splice(index, 1);
@@ -82,6 +93,7 @@ class TodoListPage extends React.Component {
           items={this.state.items}
           onCreate={this.handleAddItem}
           onDelete={this.handleDeleteItem}
+          onEdit={this.handleEditItem}
           onSelectAll={this.handleSelectAll}
           onUnselectAll={this.handleUnselectAll}
           onChangeComplete={this.handleChangeComplete}
