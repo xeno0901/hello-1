@@ -32,6 +32,17 @@ class TodoListPage extends React.Component {
     });
   };
 
+  handleDeleteItem = index => {
+    const {items} = this.state;
+    items.splice(index, 1);
+
+    localStorage.setItem('todos', JSON.stringify(items));
+
+    this.setState({
+      items: [...items],
+    });
+  };
+
   handleAddItem = text => {
     this.setState(prevState => {
       const items = [...prevState.items, {name: text, completed: false}];
@@ -47,7 +58,8 @@ class TodoListPage extends React.Component {
       <Page>
         <TodoList
           items={this.state.items}
-          onAddTodo={this.handleAddItem}
+          onCreate={this.handleAddItem}
+          onDelete={this.handleDeleteItem}
           onChangeComplete={this.handleChangeComplete}
         />
       </Page>

@@ -10,8 +10,12 @@ class TodoListItem extends React.Component {
         <Checkbox checked={completed} onChange={this.props.onChangeSelect} />
         <span>{name}</span>
 
-        <Icon type={'edit'} />
-        <Icon type={'delete'} className={'btn-delete'} />
+        <Icon type={'edit'} className={'btn btn-edit'} />
+        <Icon
+          type={'delete'}
+          className={'btn btn-delete'}
+          onClick={this.props.onDelete}
+        />
       </div>
     );
   }

@@ -5,13 +5,12 @@ import {Input, Button, Icon} from 'antd';
 
 class TodoList extends React.Component {
   handleEnterTodoText = e => {
-    this.props.onAddTodo(e.target.value);
+    this.props.onCreate(e.target.value);
   };
 
   handleChangeComplteItem = (item, index, value) => {
     item.completed = value;
     this.props.onChangeComplete(index, item);
-    console.log(item, index, value);
   };
 
   render() {
@@ -32,6 +31,7 @@ class TodoList extends React.Component {
               <TodoListItem
                 key={`item-${index}`}
                 {...item}
+                onDelete={e => this.props.onDelete(index)}
                 onChangeSelect={e =>
                   this.handleChangeComplteItem(item, index, e.target.checked)
                 }
@@ -44,8 +44,8 @@ class TodoList extends React.Component {
           <Button>전체선택</Button>
 
           <div>
-            <span>할일 0</span>
-            <span>완료 0</span>
+            <span>할일 {items.filter(item => !item.completed).length}</span>
+            <span>완료 {items.filter(item => item.completed).length}</span>
           </div>
         </div>
       </div>
