@@ -2,46 +2,78 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 import './TodoList.less';
 import {Input, Button, Icon} from 'antd';
+import PropTypes from 'prop-types';
 
 class TodoList extends React.Component {
-  static defaultProps = {
-    items: [
-      {name: 'React 개발에 필요한 환경을 구축한다', completed: true},
-      {name: '새로운 자바스크립트 문법을 익힌다.', completed: false},
-      {name: '개발 편의를 위한 IntelliJ 환경을 만든다.', completed: false},
-      {name: '기본적인 Git 사용법을 익힌다.', completed: true},
-      {name: 'PR 코드 리뷰를 응용한 개발 프로세스를 익힌다', completed: false},
-      {name: 'React 로 간단한 노트앱을 만들어본다.', completed: false},
-    ],
+  static propTypes = {
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        completed: PropTypes.bool,
+      })
+    ).isRequired,
+    onUnselectAll: PropTypes.func,
   };
 
-  componentWillUnmount() {
-    console.log('TODO LiST unmount');
+  constructor(props) {
+    super(props);
+
+    this.input = React.createRef();
   }
 
-  handleTitleClick() {
-    console.log('click', this);
-  }
+  handleEnterTodoText = e => {
+    this.props.onCreate(e.target.value);
+    this.input.current.setState({
+      value: '',
+    });
+  };
+
+  handleChangeComplteItem = (item, index, value) => {
+    item.completed = value;
+    this.props.onChangeComplete(index, item);
+  };
 
   render() {
-    console.log('TODO LIST render');
-
     const {items} = this.props;
+    const isSelectedAll = items.every(({completed}) => completed);
 
     return (
       <div className="TodoList">
         <div>
-          <Input addonAfter={<Icon type="plus" />} />
+          <Input
+            ref={this.input}
+            onPressEnter={this.handleEnterTodoText}
+            addonAfter={<Icon type="plus" />}
+          />
         </div>
 
         <div>
           {items.map((item, index) => {
-            return <TodoListItem key={`item-${index}`} {...item} />;
+            return (
+              <TodoListItem
+                key={`item-${index}`}
+                {...item}
+                onDelete={e => this.props.onDelete(index)}
+                onEdit={value => this.props.onEdit(index, value)}
+                onChangeSelect={e =>
+                  this.handleChangeComplteItem(item, index, e.target.checked)
+                }
+              />
+            );
           })}
         </div>
 
-        <div>
-          <Button>전체선택</Button>
+        <div className={'footer'}>
+          {isSelectedAll ? (
+            <Button onClick={this.props.onUnselectAll}>선택해제</Button>
+          ) : (
+            <Button onClick={this.props.onSelectAll}>전체선택</Button>
+          )}
+
+          <div>
+            <span>할일 {items.filter(item => !item.completed).length}</span>
+            <span>완료 {items.filter(item => item.completed).length}</span>
+          </div>
         </div>
       </div>
     );
