@@ -15,11 +15,17 @@ class TodoList extends React.Component {
     ],
   };
 
+  componentWillUnmount() {
+    console.log('TODO LiST unmount');
+  }
+
   handleTitleClick() {
     console.log('click', this);
   }
 
   render() {
+    console.log('TODO LIST render');
+
     const {items} = this.props;
 
     return (
@@ -29,13 +35,13 @@ class TodoList extends React.Component {
         </div>
 
         <div>
-          <Button>전체선택</Button>
-        </div>
-
-        <div>
           {items.map((item, index) => {
             return <TodoListItem key={`item-${index}`} {...item} />;
           })}
+        </div>
+
+        <div>
+          <Button>전체선택</Button>
         </div>
       </div>
     );

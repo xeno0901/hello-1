@@ -1,19 +1,41 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import './components/AppRouter.less';
-import Navigation from './components/Navigation';
-import TodoList from './components/TodoList';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import 'components/AppRouter.less';
+import Navigation from 'shared/components/Navigation';
+import IndexPage from 'pages/IndexPage';
+import AboutPage from 'pages/login/LoginPage';
+import TodoListPage from 'pages/todo-list/TodoListPage';
+import {AuthContext} from 'contexts';
 
-const Index = () => <h2>Home</h2>;
-const About = () => <h2>About</h2>;
+const PrivateRoute = ({component: Component, ...rest}) => (
+  <AuthContext.Consumer>
+    {auth => (
+      <Route
+        {...rest}
+        render={props =>
+          auth.isAuthenticated ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: {from: props.location},
+              }}
+            />
+          )
+        }
+      />
+    )}
+  </AuthContext.Consumer>
+);
 
-const AppRouter = () => (
+const AppRouter = props => (
   <Router>
     <div className={'AppRouter'}>
-      <Navigation />
-      <Route path="/" exact component={Index} />
-      <Route path="/about/" component={About} />
-      <Route path="/todo-list/" component={TodoList} />
+      <Navigation {...props} />
+      <Route path="/" exact component={IndexPage} />
+      <Route path="/login/" component={AboutPage} />
+      <PrivateRoute path="/todo-list/" component={TodoListPage} />
     </div>
   </Router>
 );
