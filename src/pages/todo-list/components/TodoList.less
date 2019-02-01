@@ -6,12 +6,31 @@
 
   .TodoListItem {
 
+    padding: 10px;
+    border-bottom: 1px dashed #ccc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
     &:hover {
       background-color: aquamarine;
     }
 
     .btn-delete {
-      display: block;
+      display: none;
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+
+
+    div {
+      span {
+        margin-left: 10px;
+      }
     }
   }
 }

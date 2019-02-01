@@ -4,44 +4,49 @@ import './TodoList.less';
 import {Input, Button, Icon} from 'antd';
 
 class TodoList extends React.Component {
-  static defaultProps = {
-    items: [
-      {name: 'React 개발에 필요한 환경을 구축한다', completed: true},
-      {name: '새로운 자바스크립트 문법을 익힌다.', completed: false},
-      {name: '개발 편의를 위한 IntelliJ 환경을 만든다.', completed: false},
-      {name: '기본적인 Git 사용법을 익힌다.', completed: true},
-      {name: 'PR 코드 리뷰를 응용한 개발 프로세스를 익힌다', completed: false},
-      {name: 'React 로 간단한 노트앱을 만들어본다.', completed: false},
-    ],
+  handleEnterTodoText = e => {
+    this.props.onAddTodo(e.target.value);
   };
 
-  componentWillUnmount() {
-    console.log('TODO LiST unmount');
-  }
-
-  handleTitleClick() {
-    console.log('click', this);
-  }
+  handleChangeComplteItem = (item, index, value) => {
+    item.completed = value;
+    this.props.onChangeComplete(index, item);
+    console.log(item, index, value);
+  };
 
   render() {
-    console.log('TODO LIST render');
-
     const {items} = this.props;
 
     return (
       <div className="TodoList">
         <div>
-          <Input addonAfter={<Icon type="plus" />} />
+          <Input
+            onPressEnter={this.handleEnterTodoText}
+            addonAfter={<Icon type="plus" />}
+          />
         </div>
 
         <div>
           {items.map((item, index) => {
-            return <TodoListItem key={`item-${index}`} {...item} />;
+            return (
+              <TodoListItem
+                key={`item-${index}`}
+                {...item}
+                onChangeSelect={e =>
+                  this.handleChangeComplteItem(item, index, e.target.checked)
+                }
+              />
+            );
           })}
         </div>
 
-        <div>
+        <div className={'footer'}>
           <Button>전체선택</Button>
+
+          <div>
+            <span>할일 0</span>
+            <span>완료 0</span>
+          </div>
         </div>
       </div>
     );

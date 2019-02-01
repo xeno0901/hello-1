@@ -7,7 +7,7 @@ class TodoListItem extends React.Component {
 
     return (
       <div className="TodoListItem">
-        <Checkbox checked={completed} />
+        <Checkbox checked={completed} onChange={this.props.onChangeSelect} />
         <span>{name}</span>
 
         <Icon type={'edit'} />
